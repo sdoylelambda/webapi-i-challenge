@@ -10,6 +10,12 @@ server.get('/', (req, res) => {
     res.send('Hello from index.js');
 })
 
+server.get('/api/users', (req, res) => {
+    db.find()
+    .then(hubs => res.status(200).json(hubs))
+    .catch(err => res.status(500).json({ success: false, err, message: 'The users information could not be retrieved.' }))
+} )
+
 server.post('/api/users', (req, res) => {
     const apiInfo = req.body;
     db.add(apiInfo)
