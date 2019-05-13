@@ -17,4 +17,21 @@ server.post('/api/users', (req, res) => {
     .catch(err => res.status(400).json({ success: false, err }))
 })
 
+server.delete('/api/users/:id', (req, res) => {
+    const { id } = req.params;
+
+    db.remove(id)
+    .then(deleted => {
+        if (deleted) {
+            res.status(204).end();
+        } else {
+            res.status(404).json({
+                success: false,
+                message: 'The user with the specified ID does not exist.'
+            })
+        }
+    })
+    .catch(err => res.status(500).json({ success: false, err}))
+})
+
 server.listen(4000, () => console.log(`\n*** Server running on http://localhost:4000 ***\n`));
